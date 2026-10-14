@@ -88,6 +88,41 @@
     }
   }
 
+  // WhatsApp Selector Modal
+  const waModal = document.getElementById('wa-modal');
+  const waModalClose = document.getElementById('wa-modal-close');
+  const waModalBackdrop = document.getElementById('wa-modal-backdrop');
+  const openWaButtons = document.querySelectorAll('[data-open-wa]');
+
+  const openWaModal = () => {
+    if (!waModal) return;
+    waModal.classList.add('is-open');
+    waModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeWaModal = () => {
+    if (!waModal) return;
+    waModal.classList.remove('is-open');
+    waModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  };
+
+  openWaButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openWaModal();
+    });
+  });
+
+  if (waModalClose) waModalClose.addEventListener('click', closeWaModal);
+  if (waModalBackdrop) waModalBackdrop.addEventListener('click', closeWaModal);
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && waModal && waModal.classList.contains('is-open')) {
+      closeWaModal();
+    }
+  });
+
   // Year
   document.getElementById('year').textContent = new Date().getFullYear();
 })();
